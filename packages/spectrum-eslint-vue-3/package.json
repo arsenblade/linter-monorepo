@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-spectrum-eslint-vue-3",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Custom lint plugin",
   "keywords": [
     "eslint",
