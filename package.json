@@ -1,5 +1,5 @@
 {
-  "name": "linter-monorep",
+  "name": "linter-monorepo",
   "private": true,
   "workspaces": [
     "packages/*"
