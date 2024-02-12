@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-spectrum-typescript",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Custom lint plugin",
   "keywords": [
     "eslint",
