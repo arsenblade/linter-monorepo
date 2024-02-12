@@ -1,6 +1,10 @@
 {
   "name": "linter-monorepo",
   "private": true,
+  "scripts": {
+    "build": "npx lerna run build",
+    "publish:all": "lerna publish from-package --yes"
+  },
   "workspaces": [
     "packages/*"
   ],
