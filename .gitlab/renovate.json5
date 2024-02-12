@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "config:base",
+    ":disableDependencyDashboard"
+  ],
+  "assignees": ["e.shangin.spectrum"],
+  "schedule": [
+    "before 3am on the first day of the month"
+  ],
+  "labels": ["dependencies"],
+  "ignoreDeps": []
+}

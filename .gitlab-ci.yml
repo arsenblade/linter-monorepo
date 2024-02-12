@@ -1,0 +1,33 @@
+stages:
+  - 🛠 prepare
+  - 🏗 build
+
+variables:
+  GITLAB_AUTH_TOKEN: $CI_JOB_TOKEN
+  NODE_MODULE_TAR: node_modules.tar
+  NODE_IMAGE: dp.spectrumdata.tech/node:18-alpine3.17
+
+.on-branch: # Job template: branch-based builds (on any branches)
+  only: [branches]
+
+.on-release: # Job template: release-based builds (only on tags with strong format)
+  only: [/^\d+\.\d+\.\d+$/]
+  except: [branches]
+
+.on-common-pull-cash:
+  image: ${NODE_IMAGE}
+  before_script:
+    - if [[ -z "${NODE_MODULE_TAR}" ]]; then echo "You need to set the 'NODE_MODULE_TAR' variable"; exit 1; fi
+    - tar -xf ${NODE_MODULE_TAR}
+  cache:
+    key:
+      files:
+        - yarn.lock
+        - package.json
+    paths:
+      - ${NODE_MODULE_TAR}
+    policy: pull
+
+include:
+  - local: '/.gitlab/stages/prepare.yml'
+  - local: '/.gitlab/stages/build.yml'

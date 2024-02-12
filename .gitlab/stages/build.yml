@@ -1,0 +1,26 @@
+# GitLab CI help:      <https://docs.gitlab.com/ee/ci/yaml/>
+# GitLab environments: <https://docs.gitlab.com/ee/ci/variables/>
+
+.build:
+  stage: 🏗 build
+  interruptible: true
+
+.node-task:
+  extends: .on-common-pull-cash
+
+build branch:
+  extends: [.build, .on-branch, .node-task]
+  script:
+    - NODE_ENV="production" yarn build:lib
+    - echo "-- build completed succesfully"
+
+build release:
+  extends: [.build, .on-release, .node-task]
+  variables:
+    PACKAGE_VERSION: $CI_COMMIT_TAG
+  script:
+    - npm --no-git-tag-version version "${PACKAGE_VERSION}"
+    - NODE_ENV="production" yarn build
+    - mv .npmrc.local .npmrc
+    - npm publish
+    - echo "-- publish completed succesfully"

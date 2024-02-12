@@ -1,0 +1,15 @@
+install node modules:
+  image: ${NODE_IMAGE}
+  stage: 🛠 prepare
+  before_script:
+    - if [[ -z "${GITLAB_AUTH_TOKEN}" ]]; then echo "You need to set the 'GITLAB_AUTH_TOKEN' variable"; exit 1; fi
+    - if [[ -z "${NODE_MODULE_TAR}" ]]; then echo "You need to set the 'NODE_MODULE_TAR' variable"; exit 1; fi
+  script:
+    - test -f ${NODE_MODULE_TAR} || (yarn --frozen-lockfile && tar -cf ${NODE_MODULE_TAR} node_modules)
+  cache:
+    key:
+      files:
+        - yarn.lock
+        - package.json
+    paths:
+      - ${NODE_MODULE_TAR}
